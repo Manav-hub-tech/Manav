@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apoorva Saree Collection | Luxury Indian Ethnic Wear</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles for Themes & Utilities -->
+    <style>
+        /* Custom Brand Fonts */
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        
+        /* Custom Color Palette variables */
+        :root {
+            --color-maroon: #6b1124;
+            --color-maroon-dark: #4d0b19;
+            --color-gold: #d4af37;
+            --color-gold-light: #f3e5ab;
+            --color-cream: #fdfbf7;
+            --color-charcoal: #2c2c2c;
+        }
+
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-charcoal);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-maroon);
+            border-radius: 4px;
+        }
+
+        /* Smooth Cart Slide Overlay */
+        .cart-slide {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Hero Banner Animations */
+        .banner-slide {
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Image Hover Scale Effects */
+        .zoom-img {
+            transition: transform 0.5s ease;
+        }
+        .zoom-container:hover .zoom-img {
+            transform: scale(1.06);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            DEFAULT: '#6b1124',
+                            dark: '#4d0b19',
+                        },
+                        gold: {
+                            DEFAULT: '#d4af37',
+                            light: '#f3e5ab',
+                        },
+                        cream: '#fdfbf7',
+                        charcoal: '#2c2c2c',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Announcement Bar -->
+    <div class="bg-[#6b1124] text-[#f3e5ab] text-xs md:text-sm py-2 px-4 text-center font-medium tracking-wide flex justify-between items-center px-6 md:px-12">
+        <div class="hidden sm:block text-xs text-amber-200/80"><i class="fa-solid fa-phone mr-1"></i> Helpline: +91 9687443057</div>
+        <div class="w-full sm:w-auto text-center">
+            <i class="fa-solid fa-gem mr-1 text-[#d4af37]"></i> Free Express Shipping across India | Flat 15% OFF on First Order: Use Code <span class="underline font-bold text-white">APPAREL15</span>
+        </div>
+        <div class="hidden sm:block text-xs text-amber-200/80"><i class="fa-solid fa-truck-fast mr-1"></i> Easy 7-Day Returns</div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 hover:text-maroon focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+
+                <!-- Brand Logo & Title -->
+                <div class="flex-1 md:flex-none text-center md:text-left">
+                    <a href="#" class="inline-block">
+                        <span class="block font-cinzel text-xl sm:text-2xl md:text-3xl font-bold tracking-widest text-[#6b1124] uppercase">
+                            Apoorva
+                        </span>
+                        <span class="block text-[9px] sm:text-[11px] font-semibold tracking-[0.3em] text-[#d4af37] uppercase -mt-1">
+                            Saree Collection
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Search Bar -->
+                <div class="hidden lg:flex flex-1 max-w-md mx-8 relative">
+                    <input type="text" id="searchInput" onkeyup="filterSearch()" placeholder="Search Banarasi, Silk, Organza Sarees..." 
+                        class="w-full pl-4 pr-10 py-2 text-sm bg-stone-50 border border-stone-200 rounded-full focus:outline-none focus:border-[#6b1124] transition">
+                    <button class="absolute right-3 top-2.5 text-stone-400 hover:text-[#6b1124]">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <!-- Icons Header (Search Mobile, Wishlist, Cart) -->
+                <div class="flex items-center space-x-5 md:space-x-6">
+                    <button onclick="toggleSearchModal()" class="lg:hidden text-stone-700 hover:text-[#6b1124]">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+
+                    <!-- Wishlist Icon -->
+                    <button onclick="toggleWishlistModal()" class="relative text-stone-700 hover:text-[#6b1124] transition">
+                        <i class="fa-regular fa-heart text-xl"></i>
+                        <span id="wishlistBadge" class="absolute -top-2 -right-2 bg-[#6b1124] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+
+                    <!-- Shopping Cart Icon -->
+                    <button onclick="toggleCartDrawer()" class="relative text-stone-700 hover:text-[#6b1124] transition flex items-center">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                        <span id="cartBadge" class="absolute -top-2 -right-2 bg-[#d4af37] text-[#6b1124] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu Links (Libas Style Categorization) -->
+        <nav class="hidden md:block bg-[#6b1124] text-white border-t border-amber-900/30">
+            <div class="max-w-7xl mx-auto px-4 flex justify-center space-x-8 text-xs lg:text-sm font-medium tracking-wider uppercase py-3">
+                <a href="#home" class="hover:text-[#d4af37] transition">Home</a>
+                <a href="#catalog" onclick="filterCategory('all')" class="hover:text-[#d4af37] transition">New Arrivals</a>
+                <a href="#catalog" onclick="filterCategory('banarasi')" class="hover:text-[#d4af37] transition">Banarasi Silk</a>
+                <a href="#catalog" onclick="filterCategory('kanjivaram')" class="hover:text-[#d4af37] transition">Kanjivaram Silk</a>
+                <a href="#catalog" onclick="filterCategory('organza')" class="hover:text-[#d4af37] transition">Organza Sarees</a>
+                <a href="#catalog" onclick="filterCategory('georgette')" class="hover:text-[#d4af37] transition">Georgette & Chiffon</a>
+                <a href="#catalog" onclick="filterCategory('partywear')" class="hover:text-[#d4af37] transition">Partywear</a>
+                <a href="#catalog" onclick="filterCategory('all')" class="text-[#d4af37] font-bold hover:text-white transition"><i class="fa-solid fa-fire mr-1"></i>Festive Sale</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300">
+        <div class="w-4/5 max-w-xs bg-white h-full p-6 shadow-xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center border-b pb-4 mb-4">
+                    <span class="font-cinzel text-lg font-bold text-[#6b1124]">Apoorva Sarees</span>
+                    <button onclick="toggleMobileMenu()" class="text-stone-500 hover:text-black">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-4 font-medium text-stone-800 text-sm">
+                    <a href="#home" onclick="toggleMobileMenu()" class="hover:text-[#6b1124]">Home</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('all')" class="hover:text-[#6b1124]">New Arrivals</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('banarasi')" class="hover:text-[#6b1124]">Banarasi Sarees</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('kanjivaram')" class="hover:text-[#6b1124]">Kanjivaram Silk</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('organza')" class="hover:text-[#6b1124]">Organza Sarees</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('georgette')" class="hover:text-[#6b1124]">Georgette & Chiffon</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('partywear')" class="hover:text-[#6b1124]">Partywear</a>
+                    <a href="#catalog" onclick="toggleMobileMenu(); filterCategory('all')" class="text-[#6b1124] font-bold">Festive Sale (Flat 50% OFF)</a>
+                </div>
+            </div>
+            <div class="border-t pt-4 text-xs text-stone-500">
+                <p><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</p>
+                <p class="mt-1"><i class="fa-solid fa-envelope mr-1"></i> support@apoorvasarees.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal for Mobile -->
+    <div id="searchModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-start pt-20 justify-center px-4">
+        <div class="bg-white w-full max-w-lg p-4 rounded-xl shadow-lg relative">
+            <button onclick="toggleSearchModal()" class="absolute right-4 top-4 text-gray-500"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-cinzel text-[#6b1124] font-bold mb-2">Search Sarees</h3>
+            <input type="text" onkeyup="filterSearch()" placeholder="Type Banarasi, Chiffon, Gold..." class="w-full p-2 border rounded-md text-sm focus:outline-none focus:border-[#6b1124]">
+        </div>
+    </div>
+
+    <!-- Hero Slider Banner Section -->
+    <section id="home" class="relative bg-stone-900 text-white overflow-hidden">
+        <div id="bannerContainer" class="relative h-[480px] md:h-[580px] lg:h-[650px] w-full">
+            
+            <!-- Slide 1 -->
+            <div class="banner-slide absolute inset-0 opacity-100 transition-opacity duration-1000 flex items-center">
+                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1800&q=80" 
+                     alt="Royal Banarasi Saree Banner" class="absolute inset-0 w-full h-full object-cover object-top opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                
+                <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full">
+                    <div class="max-w-xl text-left space-y-4">
+                        <span class="text-[#d4af37] uppercase tracking-[0.25em] text-xs md:text-sm font-semibold">Festive Special Collection</span>
+                        <h1 class="font-cinzel text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">Elegance In Every Drape</h1>
+                        <p class="text-stone-200 text-sm md:text-base font-light">Handcrafted Luxury Silk, Banarasi Zari & Designer Sarees curated for life's grandest celebrations.</p>
+                        <div class="pt-2">
+                            <a href="#catalog" class="inline-block bg-[#6b1124] hover:bg-[#4d0b19] text-white px-8 py-3.5 rounded-sm font-semibold text-xs tracking-widest uppercase transition duration-300 border border-amber-300/30 shadow-lg">
+                                Shop Collection <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="banner-slide absolute inset-0 opacity-0 transition-opacity duration-1000 flex items-center">
+                <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1800&q=80" 
+                     alt="Kanjivaram Silk Banner" class="absolute inset-0 w-full h-full object-cover object-center opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent"></div>
+                
+                <div class="relative max-w-7xl mx-auto px-6 lg:px-12 w-full">
+                    <div class="max-w-xl text-left space-y-4">
+                        <span class="text-[#d4af37] uppercase tracking-[0.25em] text-xs md:text-sm font-semibold">Bridal & Heritage</span>
+                        <h1 class="font-cinzel text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">Royal Kanjivaram Grace</h1>
+                        <p class="text-stone-200 text-sm md:text-base font-light">Experience authentic pure silk woven with pure gold zari threads by master artisans.</p>
+                        <div class="pt-2">
+                            <a href="#catalog" onclick="filterCategory('kanjivaram')" class="inline-block bg-[#d4af37] hover:bg-yellow-600 text-stone-900 px-8 py-3.5 rounded-sm font-bold text-xs tracking-widest uppercase transition duration-300 shadow-lg">
+                                Explore Kanjivaram <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Banner Slider Controls -->
+        <button onclick="prevBanner()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm transition">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm transition">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </section>
+
+    <!-- Category Showcase Grid (Libas Style Layout) -->
+    <section class="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <span class="text-[#6b1124] text-xs font-bold uppercase tracking-widest">Handpicked Handloom Categories</span>
+            <h2 class="font-cinzel text-2xl md:text-4xl font-bold text-[#6b1124] mt-1">Shop By Category</h2>
+            <div class="w-16 h-0.5 bg-[#d4af37] mx-auto mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            
+            <!-- Category Item 1 -->
+            <div onclick="filterCategory('banarasi')" class="zoom-container cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md border border-stone-200 transition">
+                <div class="h-56 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" alt="Banarasi Sarees" class="zoom-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 right-3 text-center font-cinzel text-white text-sm font-semibold tracking-wide">Banarasi Weaves</span>
+                </div>
+            </div>
+
+            <!-- Category Item 2 -->
+            <div onclick="filterCategory('kanjivaram')" class="zoom-container cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md border border-stone-200 transition">
+                <div class="h-56 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80" alt="Kanjivaram Silk" class="zoom-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 right-3 text-center font-cinzel text-white text-sm font-semibold tracking-wide">Kanjivaram Silk</span>
+                </div>
+            </div>
+
+            <!-- Category Item 3 -->
+            <div onclick="filterCategory('organza')" class="zoom-container cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md border border-stone-200 transition">
+                <div class="h-56 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" alt="Organza Sarees" class="zoom-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 right-3 text-center font-cinzel text-white text-sm font-semibold tracking-wide">Sheer Organza</span>
+                </div>
+            </div>
+
+            <!-- Category Item 4 -->
+            <div onclick="filterCategory('georgette')" class="zoom-container cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md border border-stone-200 transition">
+                <div class="h-56 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=80" alt="Georgette Sarees" class="zoom-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 right-3 text-center font-cinzel text-white text-sm font-semibold tracking-wide">Georgette & Chiffon</span>
+                </div>
+            </div>
+
+            <!-- Category Item 5 -->
+            <div onclick="filterCategory('partywear')" class="zoom-container cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md border border-stone-200 transition col-span-2 md:col-span-1">
+                <div class="h-56 md:h-64 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1610030469884-38600d367468?auto=format&fit=crop&w=600&q=80" alt="Partywear Sarees" class="zoom-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <span class="absolute bottom-3 left-3 right-3 text-center font-cinzel text-white text-sm font-semibold tracking-wide">Bridal & Partywear</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Product Catalog & Filter Pills -->
+    <section id="catalog" class="py-12 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="text-[#d4af37] font-bold text-xs uppercase tracking-wider">Most Loved Collections</span>
+                    <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-[#6b1124]">Trending Saree Catalog</h2>
+                </div>
+
+                <!-- Filter Category Buttons -->
+                <div class="flex items-center space-x-2 overflow-x-auto pt-4 md:pt-0 scrollbar-none pb-2">
+                    <button onclick="filterCategory('all')" class="filter-btn active-filter px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#6b1124] text-white transition whitespace-nowrap">All Sarees</button>
+                    <button onclick="filterCategory('banarasi')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-stone-100 text-stone-700 hover:bg-stone-200 transition whitespace-nowrap">Banarasi</button>
+                    <button onclick="filterCategory('kanjivaram')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-stone-100 text-stone-700 hover:bg-stone-200 transition whitespace-nowrap">Kanjivaram</button>
+                    <button onclick="filterCategory('organza')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-stone-100 text-stone-700 hover:bg-stone-200 transition whitespace-nowrap">Organza</button>
+                    <button onclick="filterCategory('georgette')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-stone-100 text-stone-700 hover:bg-stone-200 transition whitespace-nowrap">Georgette</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- JavaScript will dynamically render product cards here -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Brand Value Trust Badges -->
+    <section class="py-12 bg-[#fdfbf7] border-y border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                
+                <div class="p-4 flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 text-[#6b1124] flex items-center justify-center text-xl mb-3">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <h4 class="font-cinzel font-bold text-sm text-[#6b1124]">100% Authentic</h4>
+                    <p class="text-xs text-stone-500 mt-1">Directly sourced from certified weavers in Varanasi & Kanchipuram.</p>
+                </div>
+
+                <div class="p-4 flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 text-[#6b1124] flex items-center justify-center text-xl mb-3">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <h4 class="font-cinzel font-bold text-sm text-[#6b1124]">Free Express Delivery</h4>
+                    <p class="text-xs text-stone-500 mt-1">Free shipping across India on orders above ₹1,499.</p>
+                </div>
+
+                <div class="p-4 flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 text-[#6b1124] flex items-center justify-center text-xl mb-3">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </div>
+                    <h4 class="font-cinzel font-bold text-sm text-[#6b1124]">7 Days Easy Return</h4>
+                    <p class="text-xs text-stone-500 mt-1">Hassle-free 7-day pickup and full refund/exchange policy.</p>
+                </div>
+
+                <div class="p-4 flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 text-[#6b1124] flex items-center justify-center text-xl mb-3">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h4 class="font-cinzel font-bold text-sm text-[#6b1124]">Secure Checkout</h4>
+                    <p class="text-xs text-stone-500 mt-1">Support UPI, Netbanking, Cards & Cash On Delivery (COD).</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide-over Cart Panel -->
+    <div id="cartDrawer" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300 flex justify-end">
+        <div class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col">
+            
+            <!-- Cart Header -->
+            <div class="bg-[#6b1124] text-white p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <h3 class="font-cinzel font-bold text-lg">Your Shopping Bag</h3>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-stone-300 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <!-- JavaScript renders cart items dynamically -->
+            </div>
+
+            <!-- Cart Summary Footer -->
+            <div class="border-t bg-stone-50 p-4 space-y-3">
+                <div class="flex justify-between text-sm text-stone-600">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal" class="font-semibold text-stone-800">₹0</span>
+                </div>
+                <div class="flex justify-between text-sm text-stone-600">
+                    <span>Shipping</span>
+                    <span class="text-green-600 font-semibold">FREE</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-[#6b1124] border-t pt-2">
+                    <span>Grand Total</span>
+                    <span id="cartTotal">₹0</span>
+                </div>
+                <button onclick="proceedToCheckout()" class="w-full bg-[#6b1124] hover:bg-[#4d0b19] text-white py-3 rounded text-sm font-bold uppercase tracking-wider transition shadow-md">
+                    Proceed To Checkout
+                </button>
+                <p class="text-[11px] text-center text-stone-400">Taxes calculated at checkout. Safe & Encrypted payment.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-lg shadow-xl overflow-hidden max-h-[80vh] flex flex-col">
+            <div class="bg-[#6b1124] text-white p-4 flex justify-between items-center">
+                <h3 class="font-cinzel font-bold">My Saved Wishlist</h3>
+                <button onclick="toggleWishlistModal()" class="text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="wishlistContainer" class="p-4 flex-1 overflow-y-auto space-y-3">
+                <!-- Dynamic Wishlist Items -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-[#4d0b19] text-amber-100/90 text-xs md:text-sm">
+        
+        <!-- Newsletter Box -->
+        <div class="border-b border-amber-900/50 py-10 px-4">
+            <div class="max-w-4xl mx-auto text-center space-y-3">
+                <h3 class="font-cinzel text-xl md:text-2xl font-bold text-white">Join The Apoorva Couture Club</h3>
+                <p class="text-amber-200/80 text-xs font-light">Subscribe to receive exclusive festive discount codes, new saree release updates, and styling guides.</p>
+                <form onsubmit="handleSubscribe(event)" class="flex max-w-md mx-auto mt-4 gap-2">
+                    <input type="email" required placeholder="Enter your email address..." class="flex-1 px-4 py-2.5 rounded text-stone-800 text-xs focus:outline-none">
+                    <button type="submit" class="bg-[#d4af37] text-stone-900 px-6 py-2.5 rounded font-bold uppercase tracking-wider hover:bg-yellow-500 transition text-xs">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Links Grid -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+            
+            <div>
+                <h4 class="font-cinzel text-white font-bold text-base mb-4 border-b border-amber-800/50 pb-1">Apoorva Sarees</h4>
+                <p class="text-xs leading-relaxed text-amber-200/70 mb-4">
+                    Apoorva Saree Collection brings you the finest handcrafted Indian sarees directly from weaver looms. Celebrating timeless heritage, drape elegance, and silk craftsmanship.
+                </p>
+                <div class="flex space-x-3 text-stone-200">
+                    <a href="#" class="w-8 h-8 rounded-full bg-amber-900/40 flex items-center justify-center hover:text-[#d4af37] transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-amber-900/40 flex items-center justify-center hover:text-[#d4af37] transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-amber-900/40 flex items-center justify-center hover:text-[#d4af37] transition"><i class="fa-brands fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-cinzel text-white font-bold text-base mb-4 border-b border-amber-800/50 pb-1">Shop Collections</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#catalog" onclick="filterCategory('banarasi')" class="hover:text-[#d4af37]">Banarasi Silk Sarees</a></li>
+                    <li><a href="#catalog" onclick="filterCategory('kanjivaram')" class="hover:text-[#d4af37]">Kanjivaram Pure Zari</a></li>
+                    <li><a href="#catalog" onclick="filterCategory('organza')" class="hover:text-[#d4af37]">Organza & Linen</a></li>
+                    <li><a href="#catalog" onclick="filterCategory('georgette')" class="hover:text-[#d4af37]">Georgette Prints</a></li>
+                    <li><a href="#catalog" onclick="filterCategory('partywear')" class="hover:text-[#d4af37]">Bridal & Wedding Sarees</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-cinzel text-white font-bold text-base mb-4 border-b border-amber-800/50 pb-1">Customer Care</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" class="hover:text-[#d4af37]">Track Your Order</a></li>
+                    <li><a href="#" class="hover:text-[#d4af37]">7-Day Return Policy</a></li>
+                    <li><a href="#" class="hover:text-[#d4af37]">Saree Care & Wash Guide</a></li>
+                    <li><a href="#" class="hover:text-[#d4af37]">Blouse Stitching Services</a></li>
+                    <li><a href="#" class="hover:text-[#d4af37]">FAQs & Support</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-cinzel text-white font-bold text-base mb-4 border-b border-amber-800/50 pb-1">Contact Us</h4>
+                <ul class="space-y-2 text-xs text-amber-200/80">
+                    <li><i class="fa-solid fa-location-dot mr-2 text-[#d4af37]"></i> Charmaliya Street Near Bus Stop Barwala , Gujarat</li>
+                    <li><i class="fa-solid fa-phone mr-2 text-[#d4af37]"></i> +91 9687443057</li>
+                    <li><i class="fa-solid fa-envelope mr-2 text-[#d4af37]"></i> vinodbhaichauhan37@gmail.com</li>
+                    <li><i class="fa-solid fa-clock mr-2 text-[#d4af37]"></i> Mon - sun: 9:00 AM - 9:00 PM</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Copyright Bar -->
+        <div class="bg-black/40 py-4 text-center text-xs text-amber-200/50 border-t border-amber-900/40">
+            <p>&copy; 2026 Apoorva Saree Collection. All Rights Reserved. Crafted with Indian Heritage.</p>
+        </div>
+    </footer>
+
+    <!-- Application State & Script Functions -->
+    <script>
+        // Sample Product Database
+        const products = [
+            {
+                id: 1,
+                name: "Royal Crimson Banarasi Zari Silk Saree",
+                category: "banarasi",
+                price: 3499,
+                originalPrice: 6999,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
+                rating: 4.9
+            },
+            {
+                id: 2,
+                name: "Magenta Gold Brocade Kanjivaram Saree",
+                category: "kanjivaram",
+                price: 4999,
+                originalPrice: 9999,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80",
+                rating: 5.0
+            },
+            {
+                id: 3,
+                name: "Pastel Pink Floral Hand-Painted Organza Saree",
+                category: "organza",
+                price: 2299,
+                originalPrice: 4599,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
+                rating: 4.7
+            },
+            {
+                id: 4,
+                name: "Teal Blue Embroidered Georgette Saree",
+                category: "georgette",
+                price: 1899,
+                originalPrice: 3799,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80",
+                rating: 4.8
+            },
+            {
+                id: 5,
+                name: "Golden Velvet Border Bridal Lehenga Saree",
+                category: "partywear",
+                price: 7999,
+                originalPrice: 15999,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1610030469884-38600d367468?auto=format&fit=crop&w=800&q=80",
+                rating: 5.0
+            },
+            {
+                id: 6,
+                name: "Emerald Green Pure Katan Silk Banarasi",
+                category: "banarasi",
+                price: 4299,
+                originalPrice: 8599,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
+                rating: 4.9
+            },
+            {
+                id: 7,
+                name: "Classic Yellow Temple Border Kanjivaram",
+                category: "kanjivaram",
+                price: 5499,
+                originalPrice: 10999,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80",
+                rating: 4.8
+            },
+            {
+                id: 8,
+                name: "Lavender Sequence Work Chiffon Saree",
+                category: "georgette",
+                price: 2699,
+                originalPrice: 5399,
+                discount: "50% OFF",
+                image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80",
+                rating: 4.6
+            }
+        ];
+
+        // Store Application State
+        let cart = [];
+        let wishlist = [];
+        let currentSlide = 0;
+
+        // Render Products to DOM
+        function renderProducts(itemsToRender = products) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            if (itemsToRender.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-stone-500">
+                        <i class="fa-solid fa-box-open text-4xl mb-2 text-stone-300"></i>
+                        <p>No sarees found matching your query.</p>
+                    </div>`;
+                return;
+            }
+
+            itemsToRender.forEach(p => {
+                const isWishlisted = wishlist.includes(p.id);
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-lg border border-stone-200 overflow-hidden shadow-sm hover:shadow-lg transition group flex flex-col justify-between";
+                
+                card.innerHTML = `
+                    <div class="relative overflow-hidden bg-stone-100">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-64 sm:h-72 object-cover object-top group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-2 left-2 bg-[#6b1124] text-amber-200 text-[10px] font-bold px-2 py-0.5 rounded">
+                            ${p.discount}
+                        </span>
+                        <button onclick="toggleWishlist(${p.id})" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-700 flex items-center justify-center shadow transition">
+                            <i class="${isWishlisted ? 'fa-solid text-red-600' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-[11px] text-amber-700 font-semibold uppercase mb-1"><i class="fa-solid fa-star text-yellow-500 mr-1"></i>${p.rating}</div>
+                            <h3 class="font-semibold text-xs sm:text-sm text-stone-800 line-clamp-2 mb-2 group-hover:text-[#6b1124] transition">${p.name}</h3>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline space-x-2 my-2">
+                                <span class="font-bold text-stone-900 text-sm sm:text-base">₹${p.price.toLocaleString()}</span>
+                                <span class="text-xs text-stone-400 line-through">₹${p.originalPrice.toLocaleString()}</span>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="w-full bg-stone-900 hover:bg-[#6b1124] text-white py-2 rounded text-xs font-semibold uppercase tracking-wider transition flex items-center justify-center space-x-1">
+                                <i class="fa-solid fa-bag-shopping mr-1"></i>
+                                <span>Add To Bag</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Category Filter Logic
+        function filterCategory(cat) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                b.classList.remove('bg-[#6b1124]', 'text-white');
+                b.classList.add('bg-stone-100', 'text-stone-700');
+            });
+
+            if (cat === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+            }
+        }
+
+        // Real-time Search Handler
+        function filterSearch() {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        // Cart Drawer Operations
+        function addToCart(productId) {
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                const prod = products.find(p => p.id === productId);
+                cart.push({ ...prod, quantity: 1 });
+            }
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        function updateQuantity(productId, change) {
+            const idx = cart.findIndex(item => item.id === productId);
+            if (idx > -1) {
+                cart[idx].quantity += change;
+                if (cart[idx].quantity <= 0) {
+                    cart.splice(idx, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const container = document.getElementById('cartItemsContainer');
+            const totalCount = cart.reduce((acc, i) => acc + i.quantity, 0);
+            
+            badge.innerText = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-stone-400">
+                        <i class="fa-solid fa-bag-shopping text-5xl mb-3 text-stone-200"></i>
+                        <p class="text-sm">Your shopping bag is currently empty.</p>
+                    </div>`;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center space-x-3 bg-stone-50 p-3 rounded-md border border-stone-200">
+                        <img src="${item.image}" class="w-16 h-20 object-cover rounded">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-semibold text-stone-800 line-clamp-1">${item.name}</h4>
+                            <p class="text-xs text-[#6b1124] font-bold mt-1">₹${item.price.toLocaleString()}</p>
+                            <div class="flex items-center space-x-2 mt-2">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-5 h-5 bg-stone-200 rounded text-xs">-</button>
+                                <span class="text-xs font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-5 h-5 bg-stone-200 rounded text-xs">+</button>
+                            </div>
+                        </div>
+                        <button onclick="updateQuantity(${item.id}, -${item.quantity})" class="text-stone-400 hover:text-red-600">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            const subtotal = cart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+            document.getElementById('cartSubtotal').innerText = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('cartTotal').innerText = `₹${subtotal.toLocaleString()}`;
+        }
+
+        function toggleCartDrawer(forceOpen = false) {
+            const drawer = document.getElementById('cartDrawer');
+            if (forceOpen) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.toggle('hidden');
+            }
+        }
+
+        // Wishlist Operations
+        function toggleWishlist(productId) {
+            const idx = wishlist.indexOf(productId);
+            if (idx > -1) {
+                wishlist.splice(idx, 1);
+            } else {
+                wishlist.push(productId);
+            }
+            document.getElementById('wishlistBadge').innerText = wishlist.length;
+            renderProducts();
+            renderWishlistUI();
+        }
+
+        function renderWishlistUI() {
+            const container = document.getElementById('wishlistContainer');
+            if (wishlist.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-stone-400 py-6">No items saved to wishlist yet.</p>`;
+                return;
+            }
+            const savedProducts = products.filter(p => wishlist.includes(p.id));
+            container.innerHTML = savedProducts.map(p => `
+                <div class="flex items-center justify-between p-2 bg-stone-50 rounded">
+                    <div class="flex items-center space-x-3">
+                        <img src="${p.image}" class="w-12 h-14 object-cover rounded">
+                        <div>
+                            <p class="text-xs font-semibold">${p.name}</p>
+                            <p class="text-xs text-[#6b1124] font-bold">₹${p.price}</p>
+                        </div>
+                    </div>
+                    <button onclick="addToCart(${p.id})" class="bg-[#6b1124] text-white text-xs px-3 py-1 rounded">Move to Bag</button>
+                </div>
+            `).join('');
+        }
+
+        function toggleWishlistModal() {
+            document.getElementById('wishlistModal').classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function toggleSearchModal() {
+            document.getElementById('searchModal').classList.toggle('hidden');
+        }
+
+        // Hero Slider Controls
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.banner-slide');
+            slides.forEach((slide, i) => {
+                slide.style.opacity = (i === index) ? '1' : '0';
+            });
+        }
+
+        function nextBanner() {
+            const slides = document.querySelectorAll('.banner-slide');
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevBanner() {
+            const slides = document.querySelectorAll('.banner-slide');
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Automatic Banner Rotation
+        setInterval(nextBanner, 6000);
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert("Your bag is empty! Please add sarees to proceed.");
+                return;
+            }
+            alert("Redirecting to Secure Payment Gateway (Razorpay/COD)... Thank you for shopping with Apoorva Saree Collection!");
+        }
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            alert("Thank you for subscribing to Apoorva Couture Club! Check your email for your 15% discount code.");
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderProducts();
+        };
+    </script>
+</body>
+</html>
+```
